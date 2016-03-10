@@ -27,8 +27,11 @@ chrome.contextMenus.create({
     if (info.mediaType === "image") {
       needEscape = false;
       linkText = "![]("+info.srcUrl+")";
-    } else {
+    } else if (!!info.selectionText) {
       linkText = info.selectionText;
+    } else {
+      CopyAsMarkdown.linkCurrentElement(tab, info.linkUrl);
+      return;
     }
 
     CopyAsMarkdown.copyLink(linkText, info.linkUrl, { needEscape });

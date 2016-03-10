@@ -126,6 +126,18 @@ var CopyAsMarkdown = new (function() {
     });
   };
 
+  this.linkCurrentElement = function(tab, linkUrl) {
+    // Create a link to the current element
+    var cam = this;
+    var needEscape = true;
+    chrome.tabs.executeScript(tab.id,
+        {code: "document.activeElement.textContent"},
+        function(respArray) {
+          var resp = respArray[0];
+          cam.copyLink(resp, linkUrl, {needEscape});
+        });
+  };
+
   var flashBadge = function(type, text) {
     var color;
 
